@@ -4,6 +4,12 @@
  */
 package lab7p2_diegomaradiaga;
 
+import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import java.util.Random ;
+import javax.swing.JOptionPane;
+
 public class Main_Hilos extends javax.swing.JFrame {
 
     public Main_Hilos() {
@@ -19,6 +25,17 @@ public class Main_Hilos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupM_Lista = new javax.swing.JPopupMenu();
+        jmi_carpeta = new javax.swing.JMenuItem();
+        jmi_archivo = new javax.swing.JMenuItem();
+        jDialog_Archivo = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jCB_ = new javax.swing.JComboBox<>();
+        jTF_tamano = new javax.swing.JTextField();
+        jTF_nombreArchivo = new javax.swing.JTextField();
+        jbtn_aceptarArchivo = new javax.swing.JButton();
+        jDialog_Carpeta = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPB_enlace = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
@@ -26,6 +43,105 @@ public class Main_Hilos extends javax.swing.JFrame {
         jList_Unidad = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTree_Directorio = new javax.swing.JTree();
+
+        jmi_carpeta.setText("Subir carpeta");
+        jmi_carpeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_carpetaActionPerformed(evt);
+            }
+        });
+        jPopupM_Lista.add(jmi_carpeta);
+
+        jmi_archivo.setText("Subir archivo");
+        jmi_archivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_archivoActionPerformed(evt);
+            }
+        });
+        jPopupM_Lista.add(jmi_archivo);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jCB_.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ".mp4", ".pdf", ".xls", ".ppt", ".doc" }));
+        jCB_.setBorder(javax.swing.BorderFactory.createTitledBorder("Extension"));
+
+        jTF_tamano.setBorder(javax.swing.BorderFactory.createTitledBorder("Tamaño"));
+
+        jTF_nombreArchivo.setBorder(javax.swing.BorderFactory.createTitledBorder("Nombre"));
+
+        jbtn_aceptarArchivo.setText("Aceptar");
+        jbtn_aceptarArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbtn_aceptarArchivoMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jCB_, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                        .addComponent(jbtn_aceptarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTF_nombreArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTF_tamano, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jTF_nombreArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jTF_tamano, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbtn_aceptarArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCB_))
+                .addGap(28, 28, 28))
+        );
+
+        javax.swing.GroupLayout jDialog_ArchivoLayout = new javax.swing.GroupLayout(jDialog_Archivo.getContentPane());
+        jDialog_Archivo.getContentPane().setLayout(jDialog_ArchivoLayout);
+        jDialog_ArchivoLayout.setHorizontalGroup(
+            jDialog_ArchivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jDialog_ArchivoLayout.setVerticalGroup(
+            jDialog_ArchivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 473, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 293, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jDialog_CarpetaLayout = new javax.swing.GroupLayout(jDialog_Carpeta.getContentPane());
+        jDialog_Carpeta.getContentPane().setLayout(jDialog_CarpetaLayout);
+        jDialog_CarpetaLayout.setHorizontalGroup(
+            jDialog_CarpetaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jDialog_CarpetaLayout.setVerticalGroup(
+            jDialog_CarpetaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -39,8 +155,14 @@ public class Main_Hilos extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        jList_Unidad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList_UnidadMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jList_Unidad);
 
+        jTree_Directorio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTree_Directorio.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane2.setViewportView(jTree_Directorio);
@@ -94,6 +216,41 @@ public class Main_Hilos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jList_UnidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_UnidadMouseClicked
+        if(evt.isMetaDown()){
+            jPopupM_Lista.show(jList_Unidad, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jList_UnidadMouseClicked
+
+    private void jmi_carpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_carpetaActionPerformed
+        String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre de la carpeta: ");
+        String link = generarCadena5();
+        Carpetas c = new Carpetas (nombre, link);
+        listaCarpeta.add(c);
+        
+        DefaultTreeModel model = (DefaultTreeModel) jTree_Directorio.getModel();
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("C:");
+        model.setRoot(raiz);
+
+        for (int i = 0; i < listaCarpeta.size(); i++) {
+            DefaultMutableTreeNode nodoCarpeta = new DefaultMutableTreeNode(listaCarpeta.get(i));
+            raiz.add(nodoCarpeta);
+        }
+        model.reload();
+    }//GEN-LAST:event_jmi_carpetaActionPerformed
+
+    private void jmi_archivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_archivoActionPerformed
+        jDialog_Archivo.setModal(true);
+        jDialog_Archivo.pack();
+        jDialog_Archivo.setLocationRelativeTo(this);
+        jDialog_Archivo.setVisible(true);
+    }//GEN-LAST:event_jmi_archivoActionPerformed
+
+    private void jbtn_aceptarArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtn_aceptarArchivoMouseClicked
+        jDialog_Archivo.dispose();
+        JOptionPane.showMessageDialog(jDialog_Archivo, "Archivo creado exitosamente");
+    }//GEN-LAST:event_jbtn_aceptarArchivoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -127,15 +284,77 @@ public class Main_Hilos extends javax.swing.JFrame {
                 new Main_Hilos().setVisible(true);
             }
         });
+        System.out.println(generarCadena5());
+        System.out.println(generarCadena10());
+    }
+    
+    
+    private void armarArbol(){
+        
+    }
+    
+    private static String generarCadena10(){
+        int length = 10; 
+        int lBound = 48; 
+        int uBound = 122; 
+        
+        Random r = new Random(); 
+        String cadena = "";
+        
+        for (int i = 0; i < length; i++) {
+            int v = lBound + r.nextInt(uBound - lBound + 1);
+            if ((v > 47 && v <= 57) || (v > 64 && v <= 90) || (v > 96 && v <= 122)) {
+                char randomChar = (char) v;
+                cadena += randomChar;
+            }else{
+                i=i-1;
+            }
+        }
+        
+        return cadena;
+    }
+    
+    private static String generarCadena5(){
+        int length = 5; 
+        int lBound = 48; 
+        int uBound = 122; 
+        
+        Random r = new Random(); 
+        String cadena = "";
+        
+        for (int i = 0; i < length; i++) {
+            int v = lBound + r.nextInt(uBound - lBound + 1);
+            if ((v > 47 && v <= 57) || (v > 64 && v <= 90) || (v > 96 && v <= 122)) {
+                char randomChar = (char) v;
+                cadena += randomChar;
+            }else{
+                i=i-1;
+            }
+        }
+        
+        return cadena;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jCB_;
+    private javax.swing.JDialog jDialog_Archivo;
+    private javax.swing.JDialog jDialog_Carpeta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList_Unidad;
     private javax.swing.JProgressBar jPB_enlace;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPopupMenu jPopupM_Lista;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTF_nombreArchivo;
+    private javax.swing.JTextField jTF_tamano;
     private javax.swing.JTree jTree_Directorio;
+    private javax.swing.JButton jbtn_aceptarArchivo;
+    private javax.swing.JMenuItem jmi_archivo;
+    private javax.swing.JMenuItem jmi_carpeta;
     // End of variables declaration//GEN-END:variables
+    ArrayList <Carpetas> listaCarpeta = new ArrayList();
+    ArrayList <Archivos> listaArchivo = new ArrayList();
 }
