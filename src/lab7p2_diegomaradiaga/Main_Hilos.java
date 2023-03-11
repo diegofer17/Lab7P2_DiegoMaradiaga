@@ -27,7 +27,6 @@ public class Main_Hilos extends javax.swing.JFrame {
 
         jPopupM_Lista = new javax.swing.JPopupMenu();
         jmi_carpeta = new javax.swing.JMenuItem();
-        jmi_archivo = new javax.swing.JMenuItem();
         jDialog_Archivo = new javax.swing.JDialog();
         jPanel2 = new javax.swing.JPanel();
         jCB_ = new javax.swing.JComboBox<>();
@@ -36,6 +35,9 @@ public class Main_Hilos extends javax.swing.JFrame {
         jbtn_aceptarArchivo = new javax.swing.JButton();
         jDialog_Carpeta = new javax.swing.JDialog();
         jPanel3 = new javax.swing.JPanel();
+        jPopupM_archivo = new javax.swing.JPopupMenu();
+        jmi_archivo = new javax.swing.JMenuItem();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jPB_enlace = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
@@ -51,14 +53,6 @@ public class Main_Hilos extends javax.swing.JFrame {
             }
         });
         jPopupM_Lista.add(jmi_carpeta);
-
-        jmi_archivo.setText("Subir archivo");
-        jmi_archivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_archivoActionPerformed(evt);
-            }
-        });
-        jPopupM_Lista.add(jmi_archivo);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -143,6 +137,14 @@ public class Main_Hilos extends javax.swing.JFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jmi_archivo.setText("Subir archivo");
+        jmi_archivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_archivoActionPerformed(evt);
+            }
+        });
+        jPopupM_archivo.add(jmi_archivo);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -165,6 +167,11 @@ public class Main_Hilos extends javax.swing.JFrame {
         jTree_Directorio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTree_Directorio.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree_Directorio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTree_DirectorioMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTree_Directorio);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -224,7 +231,7 @@ public class Main_Hilos extends javax.swing.JFrame {
 
     private void jmi_carpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_carpetaActionPerformed
         String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre de la carpeta: ");
-        String link = generarCadena5();
+        String link = "dive.google.com/" + generarCadena10();
         Carpetas c = new Carpetas (nombre, link);
         listaCarpeta.add(c);
         
@@ -239,17 +246,54 @@ public class Main_Hilos extends javax.swing.JFrame {
         model.reload();
     }//GEN-LAST:event_jmi_carpetaActionPerformed
 
+    private void jbtn_aceptarArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtn_aceptarArchivoMouseClicked
+        jDialog_Archivo.dispose();
+        jCB_.setSelectedIndex(0);
+        JOptionPane.showMessageDialog(jDialog_Archivo, "Archivo creado exitosamente");
+        
+    }//GEN-LAST:event_jbtn_aceptarArchivoMouseClicked
+
+    private void jTree_DirectorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree_DirectorioMouseClicked
+        if (evt.isMetaDown()) {
+            int row = jTree_Directorio.getClosestRowForLocation(evt.getX(), evt.getY());
+            jTree_Directorio.setSelectionRow(row);
+            Object v1 = jTree_Directorio.getSelectionPath().getLastPathComponent();
+            nodo_seleccionado = (DefaultMutableTreeNode) v1;
+
+            if (nodo_seleccionado.getUserObject() instanceof Carpetas) {
+                jPopupM_archivo.show(evt.getComponent(), evt.getX(), evt.getY());
+            } 
+            
+        }
+    }//GEN-LAST:event_jTree_DirectorioMouseClicked
+
     private void jmi_archivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_archivoActionPerformed
         jDialog_Archivo.setModal(true);
         jDialog_Archivo.pack();
         jDialog_Archivo.setLocationRelativeTo(this);
         jDialog_Archivo.setVisible(true);
-    }//GEN-LAST:event_jmi_archivoActionPerformed
+        
+        String n = jTF_nombreArchivo.getText();
+        String link = "dive.google.com/" + generarCadena10();
+        Double t = Double.parseDouble(jTF_tamano.getText());
+        String ex = jCB_.getSelectedItem().toString();
+        Archivos c = new Archivos (n, link, ex, t);
+        listaArchivo.add(c);
+        
+        adminArchivo admp = new adminArchivo("./archivos.dfp");
+        admp.cargarArchivo();
+        admp.setArchivo(c);
+        admp.escribirArchivo();
 
-    private void jbtn_aceptarArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtn_aceptarArchivoMouseClicked
-        jDialog_Archivo.dispose();
-        JOptionPane.showMessageDialog(jDialog_Archivo, "Archivo creado exitosamente");
-    }//GEN-LAST:event_jbtn_aceptarArchivoMouseClicked
+        
+        DefaultTreeModel model = (DefaultTreeModel) jTree_Directorio.getModel();
+        DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTree_Directorio.getLastSelectedPathComponent();
+        for (int i = 0; i < listaArchivo.size(); i++) {
+            DefaultMutableTreeNode nodoArchivo = new DefaultMutableTreeNode(listaArchivo.get(i));
+            nodoSeleccionado.add(nodoArchivo);
+        }
+        model.reload();
+    }//GEN-LAST:event_jmi_archivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -346,6 +390,8 @@ public class Main_Hilos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPopupMenu jPopupM_Lista;
+    private javax.swing.JPopupMenu jPopupM_archivo;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTF_nombreArchivo;
@@ -357,4 +403,5 @@ public class Main_Hilos extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     ArrayList <Carpetas> listaCarpeta = new ArrayList();
     ArrayList <Archivos> listaArchivo = new ArrayList();
+    DefaultMutableTreeNode nodo_seleccionado;
 }
